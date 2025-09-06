@@ -1,9 +1,19 @@
 package app;
 
+import app.stockfish.StockfishUtil;
+
 public class Main {
 
     public static void main(String[] args) 
     {
-        System.out.println("Hello World!");
+        final var stockfishUtil = new StockfishUtil();
+        try {
+            stockfishUtil.startEngine();
+            stockfishUtil.sendCommand("uci");
+            stockfishUtil.waitFor("uciok");
+            stockfishUtil.stopEngine();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

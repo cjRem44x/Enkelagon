@@ -5,9 +5,9 @@ set lib=%proj%\lib
 set src=%proj%\src
 
 :: Java Specs
-set java_APP_args=a b c d
+set java_APP_args=
 set java_TEST_args=
-set java_APP_pkg_paths=*.java
+set java_APP_pkg_paths=stockfish\*.java *.java
 set java_TEST_pkg_paths=*.java
 
 :: JAVA
