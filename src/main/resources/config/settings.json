@@ -1,0 +1,58 @@
+{
+  "theme": {
+    "name": "Dragon",
+    "lightSquare": "#3D3D3D",
+    "darkSquare": "#1A1A1A",
+    "highlight": "#8B0000",
+    "lastMove": "#4A1010",
+    "legalMove": "#6B2D2D",
+    "check": "#FF2222",
+    "background": "#000000",
+    "foreground": "#FFFFFF",
+    "accent": "#DD0000",
+    "secondary": "#707070",
+    "panelBg": "#0A0A0A",
+    "buttonBg": "#2A2A2A",
+    "buttonHover": "#8B0000"
+  },
+  "fonts": {
+    "moveHistory": {
+      "family": "Consolas",
+      "size": 14
+    },
+    "analysis": {
+      "family": "Segoe UI",
+      "size": 12
+    },
+    "coordinates": {
+      "family": "Arial",
+      "size": 11,
+      "bold": true
+    },
+    "ui": {
+      "family": "Segoe UI",
+      "size": 13
+    }
+  },
+  "pieceSet": "classic",
+  "board": {
+    "showCoordinates": true,
+    "animateMoves": true,
+    "highlightLegalMoves": true,
+    "highlightLastMove": true,
+    "soundEnabled": true
+  },
+  "engine": {
+    "preset": "medium",
+    "threads": 4,
+    "hashMB": 256,
+    "skillLevel": 10,
+    "depthLimit": 10,
+    "moveTimeMs": 1000
+  },
+  "window": {
+    "width": 1936,
+    "height": 1096,
+    "maximized": false
+  }
+}
