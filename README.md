@@ -91,9 +91,11 @@ Settings are stored in `src/main/resources/config/settings.json`:
 
 ## License
 
-MIT License
+- **Code:** MIT License - see [LICENSE](LICENSE)
+- **Chess Pieces:** [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) - from [Green Chess](https://greenchess.net/info.php?item=downloads), originally derived from Wikipedia
 
 ## Acknowledgments
 
 - [Stockfish](https://stockfishchess.org/) - The powerful open-source chess engine
 - [FlatLaf](https://www.formdev.com/flatlaf/) - Modern Swing look and feel
+- [Green Chess](https://greenchess.net/) - Chess piece images by Uray M. János

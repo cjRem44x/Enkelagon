@@ -10,7 +10,9 @@
       "Bash(mvn compile:*)",
       "Bash(mvn clean compile:*)",
       "Bash(mvn exec:java:*)",
-      "Bash(del \"C:\\\\Users\\\\Carrick Remillard\\\\Prog\\\\Proj\\\\Enkelagon\\\\build.bat\")"
+      "Bash(del \"C:\\\\Users\\\\Carrick Remillard\\\\Prog\\\\Proj\\\\Enkelagon\\\\build.bat\")",
+      "WebSearch",
+      "WebFetch(domain:greenchess.net)"
     ]
   }
 }
