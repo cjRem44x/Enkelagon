@@ -50,17 +50,63 @@ public class StockfishEngine {
     private Consumer<AnalysisInfo> analysisCallback;
     private Consumer<String> bestMoveCallback;
 
-    public StockfishEngine() {
-        // Try to find Stockfish relative to working directory
-        Path workingDir = Paths.get(System.getProperty("user.dir"));
-        Path sfPath = workingDir.resolve("res").resolve("stockfish17").resolve("stockfish.exe");
+    /**
+     * Returns the OS-appropriate Stockfish binary name.
+     */
+    private static String getStockfishBinaryName() {
+        String os = System.getProperty("os.name", "").toLowerCase();
+        if (os.contains("win")) {
+            return "stockfish.exe";
+        }
+        return "stockfish";
+    }
 
-        if (!sfPath.toFile().exists()) {
-            // Try parent directory
-            sfPath = workingDir.getParent().resolve("res").resolve("stockfish17").resolve("stockfish.exe");
+    /**
+     * Returns the OS-appropriate subdirectory for bundled binaries.
+     */
+    private static String getOsSubdir() {
+        String os = System.getProperty("os.name", "").toLowerCase();
+        if (os.contains("win")) {
+            return "windows";
+        } else if (os.contains("mac") || os.contains("darwin")) {
+            return "mac";
+        }
+        return "linux";
+    }
+
+    /**
+     * Resolves the Stockfish executable path, checking multiple locations.
+     * Search order:
+     *   1. res/stockfish17/<os>/<binary>  (platform-specific bundled)
+     *   2. res/stockfish17/<binary>       (flat layout, e.g. Windows .exe)
+     *   3. ../res/stockfish17/<os>/<binary>
+     *   4. ../res/stockfish17/<binary>
+     *   5. "stockfish" on the system PATH
+     */
+    private static String resolveStockfishPath() {
+        String binaryName = getStockfishBinaryName();
+        String osSubdir = getOsSubdir();
+        Path workingDir = Paths.get(System.getProperty("user.dir"));
+
+        Path[] candidates = {
+            workingDir.resolve("res").resolve("stockfish17").resolve(osSubdir).resolve(binaryName),
+            workingDir.resolve("res").resolve("stockfish17").resolve(binaryName),
+            workingDir.getParent().resolve("res").resolve("stockfish17").resolve(osSubdir).resolve(binaryName),
+            workingDir.getParent().resolve("res").resolve("stockfish17").resolve(binaryName),
+        };
+
+        for (Path candidate : candidates) {
+            if (candidate.toFile().exists()) {
+                return candidate.toAbsolutePath().toString();
+            }
         }
 
-        this.stockfishPath = sfPath.toAbsolutePath().toString();
+        // Fall back to system PATH
+        return binaryName.equals("stockfish.exe") ? "stockfish.exe" : "stockfish";
+    }
+
+    public StockfishEngine() {
+        this.stockfishPath = resolveStockfishPath();
         this.config = new EngineConfig();
         this.executor = Executors.newSingleThreadExecutor();
         this.moveGenerator = new MoveGenerator();
@@ -105,13 +151,26 @@ public class StockfishEngine {
         }
 
         File sfFile = new File(stockfishPath);
-        if (!sfFile.exists()) {
-            throw new IOException("Stockfish not found at: " + stockfishPath);
+        boolean usingSystemPath = !sfFile.isAbsolute() || !sfFile.exists();
+
+        if (!usingSystemPath && !sfFile.exists()) {
+            throw new IOException(
+                "Stockfish not found at: " + stockfishPath +
+                "\nPlace the Stockfish binary for your OS in one of:" +
+                "\n  res/stockfish17/" + getOsSubdir() + "/" + getStockfishBinaryName() +
+                "\n  res/stockfish17/" + getStockfishBinaryName() +
+                "\nOr install Stockfish system-wide so it is available on your PATH."
+            );
+        }
+
+        // Ensure executable permission on Unix-like systems
+        if (!usingSystemPath && !System.getProperty("os.name", "").toLowerCase().contains("win")) {
+            sfFile.setExecutable(true, false);
         }
 
         ProcessBuilder pb = new ProcessBuilder(stockfishPath);
         pb.redirectErrorStream(true);
-        pb.directory(sfFile.getParentFile());
+        pb.directory(usingSystemPath ? null : sfFile.getParentFile());
         process = pb.start();
 
         // Check if process started
