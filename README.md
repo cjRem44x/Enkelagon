@@ -1,5 +1,8 @@
 # 🐉 Enkelagon Chess ♟️
 
+> [!Warning]
+> **This application currently only works on Windows platforms**
+
 A dragon-themed chess GUI with Stockfish integration, built with Java Swing.
 
 ## ✨ Features
@@ -15,11 +18,11 @@ A dragon-themed chess GUI with Stockfish integration, built with Java Swing.
 
 ## 📸 Screenshots
 
-![Game in Progress](res/img/captures/capture%20(1).png)
+![Game in Progress](<res/img/captures/capture%20(1).png>)
 
-![Move Analysis](res/img/captures/capture%20(2).png)
+![Move Analysis](<res/img/captures/capture%20(2).png>)
 
-![Board View](res/img/captures/capture%20(3).png)
+![Board View](<res/img/captures/capture%20(3).png>)
 
 ## 📋 Requirements
 
@@ -41,31 +44,34 @@ mvn clean compile
 ## 🚀 Running
 
 ### 🪟 Windows
+
 ```bash
 scripts\run.bat
 ```
 
 ### 🐧 Linux/macOS
+
 ```bash
 chmod +x scripts/run.sh
 scripts/run.sh
 ```
 
 ### 📦 Or with Maven directly
+
 ```bash
 mvn exec:java -Dexec.mainClass="com.enkelagon.App"
 ```
 
 ## ⌨️ Controls
 
-| Action | Shortcut |
-|--------|----------|
-| 🆕 New Game | Ctrl+N |
-| 📂 Load PGN | Ctrl+O |
-| 💾 Quicksave | Ctrl+S |
-| 💾 Save As | Ctrl+Shift+S |
-| ↩️ Undo Move | Ctrl+Z |
-| 🔄 Flip Board | Ctrl+F |
+| Action        | Shortcut     |
+| ------------- | ------------ |
+| 🆕 New Game   | Ctrl+N       |
+| 📂 Load PGN   | Ctrl+O       |
+| 💾 Quicksave  | Ctrl+S       |
+| 💾 Save As    | Ctrl+Shift+S |
+| ↩️ Undo Move  | Ctrl+Z       |
+| 🔄 Flip Board | Ctrl+F       |
 
 ## 🗂️ Project Structure
 
@@ -88,6 +94,7 @@ enkelagon/
 ## ⚙️ Configuration
 
 Settings are stored in `src/main/resources/config/settings.json`:
+
 - 🎨 Theme colors
 - 🔤 Font settings
 - ♟️ Board preferences
